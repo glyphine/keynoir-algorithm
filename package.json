@@ -4,7 +4,8 @@
   "description": "This is another test",
   "main": "index.js",
   "scripts": {
-    "compile": "circom.exe merkleproof.circom --r1cs --wasm --sym"
+    "compile": "circom.exe merkleproof.circom --r1cs --wasm --sym",
+    "download-ptau": "powershell -Command \"Invoke-WebRequest https://storage.googleapis.com/zkevm/ptau/powersOfTau28_hez_final_20.ptau -OutFile pot20_final.ptau\""
   },
   "repository": {
     "type": "git",
