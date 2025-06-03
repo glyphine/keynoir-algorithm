@@ -4,7 +4,7 @@
   "description": "This is another test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "combile": "./circom.exe merkleproof.circom --r1cs --wasm --sym"
   },
   "repository": {
     "type": "git",
