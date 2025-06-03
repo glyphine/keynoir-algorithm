@@ -42,6 +42,7 @@ test/*.js
 # Circom build artifacts
 *.r1cs
 *.wasm
+**/*.wasm
 *.sym
 *.zkey
 *.ptau
@@ -51,6 +52,7 @@ witness.wtns
 input.json
 proof.json
 public.json
+verification_key.json
 
 # OS-specific files
 .DS_Store
