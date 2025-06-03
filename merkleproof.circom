@@ -13,18 +13,22 @@ template Mux1() {
     signal notSelIn0;
 
     notSel <== 1 - sel;
-
     selIn1 <== sel * in1;
     notSelIn0 <== notSel * in0;
-
     out <== selIn1 + notSelIn0;
 }
 
 template MerkleProof(depth) {
     signal input root;
-    signal input leaf;
+    signal input credential; // RAW credential, not pre-hashed
     signal input pathElements[depth];
     signal input pathIndices[depth];
+
+    component leafHasher = Poseidon(2);
+    leafHasher.inputs[0] <== credential;
+    leafHasher.inputs[1] <== 0;
+    signal leaf;
+    leaf <== leafHasher.out;
 
     signal currentHash[depth + 1];
     signal left[depth];
@@ -37,23 +41,18 @@ template MerkleProof(depth) {
     currentHash[0] <== leaf;
 
     for (var i = 0; i < depth; i++) {
-        // Instantiate Mux1 components
         muxLeft[i] = Mux1();
-        muxRight[i] = Mux1();
-
-        // Set inputs for muxLeft
         muxLeft[i].in0 <== currentHash[i];
         muxLeft[i].in1 <== pathElements[i];
         muxLeft[i].sel <== pathIndices[i];
         left[i] <== muxLeft[i].out;
 
-        // Set inputs for muxRight
+        muxRight[i] = Mux1();
         muxRight[i].in0 <== pathElements[i];
         muxRight[i].in1 <== currentHash[i];
         muxRight[i].sel <== pathIndices[i];
         right[i] <== muxRight[i].out;
 
-        // Hash the pair
         hashNode[i] = Poseidon(2);
         hashNode[i].inputs[0] <== left[i];
         hashNode[i].inputs[1] <== right[i];
@@ -61,7 +60,6 @@ template MerkleProof(depth) {
         currentHash[i + 1] <== hashNode[i].out;
     }
 
-    // Ensure the computed root matches the provided root
     root === currentHash[depth];
 }
 
