@@ -39,4 +39,19 @@ lib/*.js
 test/*.js
 *.map
 
-pot20_final.ptau
+# Circom build artifacts
+*.r1cs
+*.wasm
+*.sym
+*.zkey
+*.ptau
+witness.wtns
+
+# Input and output files
+input.json
+proof.json
+public.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
