@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/glyphine/keynoir-algorithm#readme",
   "devDependencies": {
+    "@types/circomlibjs": "^0.1.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
